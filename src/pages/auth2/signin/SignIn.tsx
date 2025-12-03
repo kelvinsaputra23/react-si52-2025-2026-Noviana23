@@ -1,22 +1,17 @@
-import { useState, type ChangeEvent, type FormEvent } from 'react';
-import { Button } from 'react-bootstrap';
-import Form from 'react-bootstrap/Form';
-import ApiClient from '../../../utils/ApiClient';
-import { NavLink } from 'react-router';
+import { useState, type ChangeEvent, type FormEvent } from "react";
+import { Button, Form } from "react-bootstrap";
+import ApiClient from "../../../utils/ApiClient";
 
-interface SignUpFrom {
-    username : string,
+interface SignInFrom {
     email : string,
     password : string, 
 }
-function SignUp(){
-    const [form, setForm] = useState<SignUpFrom>({
-        username : "",
-        email : "",
-        password :""
-    })
-
-    const onHandleChange = (event : ChangeEvent<HTMLInputElement>) => {
+function SignIn (){
+     const [form, setForm] = useState<SignInFrom>({
+            email : "",
+            password :""
+        })
+        const onHandleChange = (event : ChangeEvent<HTMLInputElement>) => {
         const {name, value } = event.target
 
         setForm({
@@ -29,7 +24,7 @@ function SignUp(){
         event.preventDefault()
 
         try {
-            const response = await ApiClient.post("/signuo", form)
+            const response = await ApiClient.post("/signin", form)
 
             console.log(response);
         }catch (error){
@@ -38,17 +33,8 @@ function SignUp(){
     }
 
     return <div className='container mx-auto'>
-        <h2> Sign Up</h2>
-        <Form onSubmit={onSubmit}>
-               <Form.Group className="mb-3" controlId="formUsername">
-                     <Form.Label>Username</Form.Label>
-                     <Form.Control 
-                        value = {form.username}
-                        onChange = {onHandleChange}
-                        name="username" 
-                        type="text" 
-                        placeholder="Username"/>
-               </Form.Group>
+        <h2> Sign In</h2>
+       <Form onSubmit={onSubmit}>
                 <Form.Group className="mb-3" controlId="formEmail">
                      <Form.Label>Email</Form.Label>
                      <Form.Control 
@@ -68,10 +54,8 @@ function SignUp(){
                         placeholder="Password"/>
                </Form.Group>
             </Form>
-            <Button type="submit" variant="primary"> Sign Up </Button>
-            <NavLink to ="/signin">Sign In </NavLink>
+            <Button type="submit" variant="primary"> Sign In </Button>
     </div>
-    
 }
 
-export default SignUp
+export default SignIn;
